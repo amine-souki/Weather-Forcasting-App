@@ -69,10 +69,11 @@ export async function getWeatherData(query: string): Promise<WeatherData> {
       log(`City not recognized, using default (New York) coordinates`, 'weather-api');
     }
     
-    // Get current weather
+    // Get current weather using the correct endpoint and parameter name
     const response = await weatherClient.get('/city', {
       params: {
-        cityName: query,
+        city: query,
+        lang: "EN"
       },
     });
 
