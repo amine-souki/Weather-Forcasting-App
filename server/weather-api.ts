@@ -6,8 +6,11 @@ import { log } from './vite';
 const WEATHER_API_URL = 'https://api.weatherapi.com/v1';
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY || '';
 
+// Logging API key status (not the actual key)
 if (!WEATHER_API_KEY) {
   log('WARNING: WEATHER_API_KEY environment variable is not set', 'weather-api');
+} else {
+  log('WEATHER_API_KEY is set and has length: ' + WEATHER_API_KEY.length, 'weather-api');
 }
 
 // Client for the weather API
