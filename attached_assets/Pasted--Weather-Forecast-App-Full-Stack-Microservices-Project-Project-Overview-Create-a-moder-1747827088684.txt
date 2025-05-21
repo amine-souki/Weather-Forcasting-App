@@ -1,0 +1,91 @@
+# Weather Forecast App - Full-Stack Microservices Project
+
+## 🌦️ Project Overview
+Create a modern weather forecast application that displays current weather conditions for any city using a public weather API (such as one from RapidAPI). This project implements a microservices architecture with separate frontend and backend components.
+
+## 🎯 Core Functionality
+- Allow users to search for weather by city/country
+- Display current weather conditions including temperature, humidity, wind speed, etc.
+- Show appropriate weather icons based on conditions (☀️ 🌧️ ☁️)
+- Implement error handling for user inputs
+- Optional: Enable weather notification subscriptions
+
+## ⚙️ Technical Architecture
+
+### Frontend (User Interface)
+- **Technology options:** React, Vue.js, or Next.js
+- **Features:**
+  - Search bar for city/country input
+  - Dynamic weather display with icons
+  - User-friendly error messages
+  - Responsive design for all devices
+  - Optional: Notification subscription form
+
+### Backend API Service
+- **Technology options:** Python (Flask/FastAPI), Node.js, or Go
+- **Responsibilities:**
+  - Process frontend requests
+  - Communicate with external weather API (RapidAPI)
+  - Handle errors and rate limits
+  - Format and return JSON responses
+  - Implement Redis caching to reduce API calls
+
+### Notification Microservice (Optional)
+- **Features:**
+  - Email/SMS notification scheduling
+  - Background task processing (Celery if using Python)
+  - Integration with email services (SendGrid/Mailgun) or SMS (Twilio)
+  - Weather change detection algorithms
+- **Storage:** Redis or PostgreSQL for user preferences
+
+### Data Storage
+- **Redis:** For caching weather results
+- **PostgreSQL/MongoDB:** For user subscriptions (optional)
+- **Monitoring:** Grafana/Prometheus
+
+### DevOps Pipeline
+- **CI/CD:** GitHub Actions
+- **Testing:** PyTest, Mocha, Postman, or Selenium
+- **Containerization:** Docker with Docker Compose
+- **Orchestration:** Docker Swarm or Kubernetes (for production)
+
+### Monitoring & Observability
+- **Metrics:** API response times, resource usage, API quota usage
+- **Tools:** Prometheus, Grafana, Loki or ELK
+- **Alerting:** For quota limits or service issues
+
+## 🧪 Testing Strategy
+- Unit tests for core functions
+- API endpoint tests
+- UI/Integration tests
+- Load/stress testing (optional)
+
+## 🚀 Potential Enhancements
+- User authentication
+- Weather history tracking
+- City comparison feature
+- Dark/light theme toggle
+- Mobile app version (Flutter/React Native)
+- Cloud deployment with infrastructure as code
+
+## 📚 Implementation Guidelines
+1. Start by setting up the basic frontend and backend structures
+2. Implement the core weather API integration
+3. Add error handling and caching
+4. Build the UI components and styling
+5. Implement the notification service (if desired)
+6. Set up monitoring and observability
+7. Create Docker containers and compose file
+8. Implement CI/CD pipeline
+9. Add enhancements as time permits
+
+## 🔑 API Keys
+- You'll need to register for an API key from a weather service provider
+- Store API keys securely using environment variables
+- Implement rate limiting to manage API quota
+
+## 📝 Documentation Requirements
+- API documentation (Swagger/OpenAPI)
+- Setup and installation instructions
+- User guide
+- Architecture diagram
