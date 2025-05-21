@@ -2,8 +2,8 @@ import axios from 'axios';
 import { WeatherData, weatherDataSchema, WeatherSuggestion } from '@shared/schema';
 import { log } from './vite';
 
-// Weather API URL and key from environment variables
-const WEATHER_API_URL = 'https://api.weatherapi.com/v1';
+// Weather API URL from RapidAPI
+const WEATHER_API_URL = 'https://weatherapi-com.p.rapidapi.com';
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY || '';
 
 // Logging API key status (not the actual key)
@@ -11,14 +11,16 @@ if (!WEATHER_API_KEY) {
   log('WARNING: WEATHER_API_KEY environment variable is not set', 'weather-api');
 } else {
   log('WEATHER_API_KEY is set and has length: ' + WEATHER_API_KEY.length, 'weather-api');
+  log('Using RapidAPI for weather data', 'weather-api');
 }
 
-// Client for the weather API
+// Client for the RapidAPI weather service
 const weatherClient = axios.create({
   baseURL: WEATHER_API_URL,
-  params: {
-    key: WEATHER_API_KEY,
-  },
+  headers: {
+    'X-RapidAPI-Key': WEATHER_API_KEY,
+    'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
+  }
 });
 
 // Get current weather data and forecast for a location
