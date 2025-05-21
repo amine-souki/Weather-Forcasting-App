@@ -6,28 +6,40 @@ import { log } from './vite';
 const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379';
 const DEFAULT_TTL = 5 * 60; // 5 minutes in seconds
 
-// Create Redis client with options
+// Check for environment - only try Redis in production
 let redisClient: Redis | null = null;
 let useRedis = false;
 
-try {
-  redisClient = new Redis(REDIS_URL, {
-    maxRetriesPerRequest: 1,
-    connectTimeout: 1000,
-    lazyConnect: true
-  });
-  
-  // Test connection
-  redisClient.connect().then(() => {
-    useRedis = true;
-    log('Redis connection established successfully', 'redis');
-  }).catch(err => {
-    log(`Redis connection failed: ${err.message}. Using in-memory cache fallback.`, 'redis');
+// In development or if REDIS_DISABLED is set, don't even try to connect
+const isRedisDisabled = process.env.NODE_ENV !== 'production' || process.env.REDIS_DISABLED === 'true';
+
+if (isRedisDisabled) {
+  log('Redis disabled in development mode. Using in-memory cache.', 'redis');
+} else {
+  try {
+    redisClient = new Redis(REDIS_URL, {
+      maxRetriesPerRequest: 1,
+      connectTimeout: 1000,
+      lazyConnect: true,
+      retryStrategy: () => null // Don't retry connection
+    });
+    
+    // Test connection
+    redisClient.connect().then(() => {
+      useRedis = true;
+      log('Redis connection established successfully', 'redis');
+    }).catch(err => {
+      log(`Redis connection failed: ${err.message}. Using in-memory cache fallback.`, 'redis');
+      useRedis = false;
+      // Close the client to prevent retry attempts
+      redisClient.disconnect();
+      redisClient = null;
+    });
+  } catch (err) {
+    log(`Redis initialization error: ${(err as Error).message}. Using in-memory cache fallback.`, 'redis');
     useRedis = false;
-  });
-} catch (err) {
-  log(`Redis initialization error: ${(err as Error).message}. Using in-memory cache fallback.`, 'redis');
-  useRedis = false;
+    redisClient = null;
+  }
 }
 
 // In-memory fallback cache Map
