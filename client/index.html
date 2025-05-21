@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <meta name="description" content="Get real-time weather updates for any city around the world with our Weather Forecast App. View temperature, humidity, wind speed, and more." />
+    <title>Weather Forecast App</title>
+    <!-- Font Awesome for weather icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- OG Tags -->
+    <meta property="og:title" content="Weather Forecast App" />
+    <meta property="og:description" content="Get real-time weather updates for any city around the world with our Weather Forecast App." />
+    <meta property="og:type" content="website" />
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .weather-data {
+        font-family: 'Roboto Mono', monospace;
+      }
+      .bg-sunny {
+        background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+      }
+      .bg-cloudy {
+        background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+      }
+      .bg-rainy {
+        background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+      }
+      .bg-night {
+        background: linear-gradient(120deg, #30cfd0 0%, #330867 100%);
+      }
+      .bg-snowy {
+        background: linear-gradient(120deg, #e6e9f0 0%, #eef1f5 100%);
+      }
+      .search-gradient {
+        background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.4) 100%);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
+    <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
+  </body>
+</html>
