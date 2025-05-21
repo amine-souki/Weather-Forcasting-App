@@ -2,7 +2,7 @@ import express, { type Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { getWeatherData, searchCities } from "./weather-api";
-import { weatherCache } from "./redis-cache";
+import { weatherCache } from "./redis"; // Updated to use new Redis implementation
 import { weatherSearchSchema } from "@shared/schema";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";

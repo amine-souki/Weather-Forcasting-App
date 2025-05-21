@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://${PGUSER}:${PGPASSWORD}@postgres:5432/${PGDATABASE}
+      - REDIS_URL=redis://redis:6379
+      - WEATHER_API_KEY=${WEATHER_API_KEY}
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - weather-network
+
+  postgres:
+    image: postgres:15-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${PGUSER}
+      - POSTGRES_PASSWORD=${PGPASSWORD}
+      - POSTGRES_DB=${PGDATABASE}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - weather-network
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - weather-network
+
+networks:
+  weather-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  redis-data:
