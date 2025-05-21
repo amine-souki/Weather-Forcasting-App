@@ -46,7 +46,10 @@ export async function getWeatherData(query: string): Promise<WeatherData> {
       'beijing': { lat: 39.90, lon: 116.41 },
       'sydney': { lat: -33.87, lon: 151.21 },
       'berlin': { lat: 52.52, lon: 13.41 },
-      'moscow': { lat: 55.75, lon: 37.62 }
+      'moscow': { lat: 55.75, lon: 37.62 },
+      'dubai': { lat: 25.20, lon: 55.27 },
+      'tunis': { lat: 36.81, lon: 10.18 },
+      'rabat': { lat: 34.02, lon: -6.83 }
     };
     
     // Find matching city
@@ -69,13 +72,28 @@ export async function getWeatherData(query: string): Promise<WeatherData> {
       log(`City not recognized, using default (New York) coordinates`, 'weather-api');
     }
     
-    // Get current weather using the correct endpoint and parameter name
-    const response = await weatherClient.get('/city', {
-      params: {
-        city: query,
-        lang: "EN"
-      },
-    });
+    // First try to get weather by city name
+    let response;
+    try {
+      response = await weatherClient.get('/city', {
+        params: {
+          city: query,
+          lang: "EN"
+        },
+      });
+      log(`Successfully fetched weather data by city name for: ${query}`, 'weather-api');
+    } catch (cityError) {
+      // If city name fails, try using coordinates instead
+      log(`City name lookup failed, trying coordinates for: ${query}`, 'weather-api');
+      response = await weatherClient.get('/latlon', {
+        params: {
+          latitude: latitude,
+          longitude: longitude,
+          lang: "EN"
+        },
+      });
+      log(`Successfully fetched weather data by coordinates for: ${query}`, 'weather-api');
+    }
 
     log(`Weather data fetch successful for: ${query}`, 'weather-api');
     
@@ -163,6 +181,8 @@ export async function searchCities(query: string): Promise<WeatherSuggestion[]> 
     { id: 8, name: 'Berlin', region: 'Berlin', country: 'Germany', lat: 52.52, lon: 13.41 },
     { id: 9, name: 'Beijing', region: 'Beijing', country: 'China', lat: 39.90, lon: 116.41 },
     { id: 10, name: 'Dubai', region: 'Dubai', country: 'United Arab Emirates', lat: 25.20, lon: 55.27 },
+    { id: 11, name: 'Tunis', region: 'Tunis', country: 'Tunisia', lat: 36.81, lon: 10.18 },
+    { id: 12, name: 'Rabat', region: 'Rabat-Salé-Kénitra', country: 'Morocco', lat: 34.02, lon: -6.83 },
   ];
   
   // Filter cities based on query
